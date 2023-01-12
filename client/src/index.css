@@ -1,0 +1,65 @@
+.spinner {
+  height:100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.12);
+}
+.user-menu.nav > li > .dropdown-menu {
+  opacity: 0;
+  top: 0;
+  visibility:hidden;
+  transition: 0.3s ease all;;
+}
+.user-menu.nav > li > a:focus+.dropdown-menu {
+  opacity: 1;
+  top: -30px;
+  visibility: visible;
+  transition: 0.5s ease all;;
+}
+.user-menu.nav > li > .dropdown-menu.notifications {
+  left: auto;
+  right: 0;
+}
+.sidebar {
+  height: calc(100% - 90px) !important;
+}
+#sidebar-menu {
+  height: 100%;
+  overflow-y: overlay;
+}
+.sidebar-inner {
+  height: 100%;
+  transition: all 0.2s ease-in-out 0s;
+  overflow: hidden;
+}
+#sidebar-menu::-webkit-scrollbar {
+width: 7px;
+height: 7px;
+}
+#sidebar-menu::-webkit-scrollbar-track {
+box-shadow: inset 0 0 0 rgb(205 205 205);
+}
+.sidebar-inner:hover #sidebar-menu::-webkit-scrollbar-track {
+box-shadow: inset 0 0 6px rgb(205 205 205);
+}
+#sidebar-menu::-webkit-scrollbar-thumb {
+background-color:#fff;
+}
+.sidebar-inner:hover #sidebar-menu::-webkit-scrollbar-thumb {
+background-color:#cccccc;
+}
+.text-link {
+  cursor: pointer;
+}
+.hide {display:none}
+.show {display:block !important}
+a.subdrop, .sidebar-menu > ul > li > a {
+  transition: 1s ease all;
+}
+.sidebar-menu ul ul.show, .sidebar-menu ul ul {
+  transition: 1s ease all;
+}
+.user-menu.nav li.user-profile-list>a {
+  display: flex !important;
+}
