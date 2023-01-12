@@ -1,18 +1,23 @@
-import React, {useEffect} from 'react';
+import React, {useState,useEffect} from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import Layout from '../components/Layout';
 
 const HomePage = () => {
 
+  const [user, setUser] = useState([]);
+
     // login user data
     const getUserData = async () => {
         try {
-            const res = await axios.post('/api/v1/user/geyUserData',{},{
+            const res = await axios.post('/api/v1/user/getUserData',{},{
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('token')
                 }
             })
+            if(res.data.success) {
+              setUser(res.data.data)
+            }
         } catch (error) {
             console.log(error)
         }
@@ -44,7 +49,7 @@ const HomePage = () => {
             <div className="row">
               <div className="col-md-6">
                 <div className="morning-user">
-                  <h2>Good Morning, <span>Shahbaz Mughal</span></h2>
+                  <h2>Good Morning, <span>{user?.name}</span></h2>
                   <p>Have a nice day at work</p>
                 </div>
               </div>

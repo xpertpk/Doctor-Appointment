@@ -17,6 +17,6 @@ router.post("/login", loginController);
 router.post("/register", registerController);
 
 //Auth || POST
-router.post("/geyUserData", authMiddleware, authController)
+router.post("/getUserData", authMiddleware, authController)
 
 module.exports = router;

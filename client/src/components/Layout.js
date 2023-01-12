@@ -17,6 +17,7 @@ function Layout({ children }) {
   };
 
   useEffect(() => {
+        console.log(SidebarMenu)
       // console.log(location.pathname)
   }, [])
 
@@ -257,8 +258,8 @@ function Layout({ children }) {
                 data-bs-toggle="dropdown"
               >
                 <div className="user-names">
-                  <h5>Shahbaz Mughal</h5>
-                  <span>Admin</span>
+                  <h5>{user?.name}</h5>
+                  <span>{user?.email}</span>
                 </div>
                 <span className="user-img">
                   <img src="/img/sam.jpg" alt="Admin" />
