@@ -17,7 +17,6 @@ function Layout({ children }) {
   };
 
   useEffect(() => {
-        console.log(SidebarMenu)
       // console.log(location.pathname)
   }, [])
 
@@ -113,7 +112,11 @@ function Layout({ children }) {
                 data-bs-toggle="dropdown"
               >
                 <img src="/img/icons/note-icon-01.svg" alt="" />
-                <span className="pulse"></span>
+                {
+                  user && user.notification.length > 0 ?
+                  <span className="pulse"><span className="count">{user.notification.length}</span></span>
+                  :<></>
+                }
               </Link>
               <div className="dropdown-menu notifications">
                 <div className="topnav-dropdown-header">
@@ -330,6 +333,15 @@ function Layout({ children }) {
                     </li>
                   );
                 })}
+
+                <li className="submenu" onClick={handleLogout}>
+                  <Link href="/login">
+                    <span className="menu-side">
+                      <img src="/img/icons/logout.svg" alt="Logout" />
+                    </span>
+                    <span>Logout</span>
+                  </Link>
+                </li>
                 
                 <li className="submenu">
                   <Link to="#" className={sm1} onClick={sm1Click}>
@@ -395,14 +407,7 @@ function Layout({ children }) {
                     </li>
                   </ul>
                 </li>
-                <li className="submenu" onClick={handleLogout}>
-                  <Link href="/login">
-                    <span className="menu-side">
-                      <img src="/img/icons/logout.svg" alt="Logout" />
-                    </span>
-                    <span>Logout</span>
-                  </Link>
-                </li>
+                
               </ul>
             </div>
           </div>

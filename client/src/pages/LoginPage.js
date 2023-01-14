@@ -22,16 +22,18 @@ const LoginPage = () => {
             dispatch(showLoading());
             const res = await axios.post(`/api/v1/user/login`, data);
             dispatch(hideLoading());
-            if(res.data.success) {
+            console.log(res.data.message)
+            console.log(res.data.success)
+            if(res.data.success === false) {
+                setSuccess("");
+                setError(res.data.message)
+            } else {
                 localStorage.setItem('token', res.data.token);
-                setSuccess("Login successfully")
+                setSuccess(res.data.message)
                 setTimeout(() => {
                     navigate('/')
                     setSuccess("")
-                }, 2000);
-            } else {
-                setSuccess("");
-                setError(res.data.message)
+                }, 2000); 
             }
         } catch (error) {
             dispatch(hideLoading());
@@ -69,16 +71,18 @@ const LoginPage = () => {
 
                                         <form>
                                             {
-                                                error &&
+                                                error !== "" ?
                                                 <div className='alert alert-danger mb-4'>
                                                     <div className='alert-text'>{error}</div>
                                                 </div>
+                                                : <></>
                                             }
                                             {
-                                                success &&
+                                                success !== "" ?
                                                 <div className='alert alert-success mb-4'>
                                                     <div className='alert-text'>{success}</div>
                                                 </div>
+                                                : <></>
                                             }
                                             <div className="form-group">
                                                 <label>Email <span className="login-danger">*</span></label>
@@ -86,6 +90,7 @@ const LoginPage = () => {
                                                     name="email" 
                                                     className="form-control" 
                                                     type="email" 
+                                                    autoComplete='off'
                                                     onChange={(e) => setEmail(e.target.value)}
                                                     value={email}
                                                 />
@@ -96,6 +101,7 @@ const LoginPage = () => {
                                                 <input 
                                                     name="password" 
                                                     type="password" 
+                                                    autoComplete='off'
                                                     className="form-control pass-input"
                                                     onChange={(e) => setPassword(e.target.value)}
                                                     value={password}

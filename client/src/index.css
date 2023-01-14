@@ -1,9 +1,19 @@
 .spinner {
-  height:100vh;
-  display: flex;
-  justify-content: center;
+  height: 100vh;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.12);
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.spinner-border {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0.25em solid #FFF;
+  border-right-color: transparent;
 }
 .user-menu.nav > li > .dropdown-menu {
   opacity: 0;
@@ -62,4 +72,30 @@ a.subdrop, .sidebar-menu > ul > li > a {
 }
 .user-menu.nav li.user-profile-list>a {
   display: flex !important;
+}
+.range-separator {
+  margin-top: -2px;
+}
+.pulse {
+  top: 20px !important;
+  right: 1px !important;
+  width: 14px !important;
+  height: 14px !important;
+}
+.pulse:before {
+  width: 14px !important;
+  height: 14px !important;
+}
+.pulse>.count {
+  position: absolute;
+  display: block;
+  z-index: 999;
+  color: #2e37a4;
+  font-size: 9px;
+  font-weight: 600;
+  top: 0;
+  left: 0;
+  width: 14px;
+  line-height: 14px;
+  text-align: center;
 }
