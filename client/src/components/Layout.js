@@ -107,9 +107,9 @@ function Layout({ children }) {
           <ul className="nav user-menu float-end">
             <li className="nav-item dropdown d-none d-sm-block">
               <Link
-                to="#"
-                className="dropdown-toggle nav-link"
-                data-bs-toggle="dropdown"
+                to="/notification"
+                className="nav-link"
+                // data-bs-toggle="dropdown"
               >
                 <img src="/img/icons/note-icon-01.svg" alt="" />
                 {
@@ -118,7 +118,7 @@ function Layout({ children }) {
                   :<></>
                 }
               </Link>
-              <div className="dropdown-menu notifications">
+              {/* <div className="dropdown-menu notifications">
                 <div className="topnav-dropdown-header">
                   <span>Notifications</span>
                 </div>
@@ -252,7 +252,7 @@ function Layout({ children }) {
                 <div className="topnav-dropdown-footer">
                   <Link href="/">View all Notifications</Link>
                 </div>
-              </div>
+              </div> */}
             </li>
             <li className="nav-item dropdown has-arrow user-profile-list">
               <Link
