@@ -100,7 +100,7 @@ const NotificationPage = ()=> {
                                                     </h5>
                                                     {
                                                         user?.notification.map((notifiMsg, n) => (
-                                                            <div className="comman-activitys flex-grow-1 text-link mb-5" key={n}>
+                                                            <div className="comman-activitys flex-grow-1 text-link mb-3" key={n}>
                                                                 <h3><span>{notifiMsg?.message}</span></h3>
                                                                 <p>User Notification (Added by: {notifiMsg.name})</p>
                                                             </div>
@@ -125,7 +125,7 @@ const NotificationPage = ()=> {
                                                     </h5>
                                                     {
                                                         user?.seennotification.map((notifiMsg, index) => (
-                                                            <div className="comman-activitys flex-grow-1 text-link mb-5" key={index}>
+                                                            <div className="comman-activitys flex-grow-1 text-link mb-3" key={index}>
                                                                 <h3><span>{notifiMsg?.message}</span></h3>
                                                                 <p>User Notification (Added by: {notifiMsg.name})</p>
                                                             </div>

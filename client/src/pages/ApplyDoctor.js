@@ -41,7 +41,8 @@ const ApplyDoctor = () => {
             experience:experience,
             feePerConsultation:fee,
             specialization: specialization,
-            timing:{start:timing1, end:timing2}
+            start:timing1, 
+            end:timing2
         }
 
         setSuccess("");

@@ -9,7 +9,6 @@ function Layout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
-  const SidebarMenu = user?.isAdmin ? AdminMenu : UserMenu;
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
@@ -84,6 +83,33 @@ function Layout({ children }) {
       setMini("");
     }
   };
+
+  //************   Doctor Menu   *************//
+  const doctorMenu = [
+    {
+      name: "Home",
+      path: "/",
+      icon: "fa-solid fa-house",
+    },
+    {
+      name: "Appointments",
+      path: "/appointments",
+      icon: "fa-solid fa-list",
+    },
+    {
+      name: "Profile",
+      path: `/doctor/profile/${user?._id}`,
+      icon: "fa-solid fa-user",
+    },
+  ];
+  //************   Doctor Menu   *************//
+
+  const SidebarMenu = user?.isAdmin 
+    ? AdminMenu 
+    : user?.isDoctor 
+    ? doctorMenu 
+    : UserMenu;
+
   return (
     <div className={`body ${mini}`}>
       <div className="main-wrapper">
