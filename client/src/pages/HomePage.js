@@ -2,10 +2,12 @@ import React, {useState,useEffect} from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import Layout from '../components/Layout';
+import DoctorList from '../components/DoctorList';
 
 const HomePage = () => {
 
-  const [user, setUser] = useState([]);
+    const [user, setUser] = useState([]);
+    const [doctors, setDoctors] = useState([]);
 
     // login user data
     const getUserData = async () => {
@@ -23,13 +25,34 @@ const HomePage = () => {
         }
     }
 
+
+    // Get All Doctors Data
+    const getAllDoctors = async () => {
+        try {
+            const res = await axios.get(
+              '/api/v1/user/getDoctors', 
+              {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('token')
+                }
+              }
+            );
+            if(res.data.success) {
+              setDoctors(res.data.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         getUserData();
+        getAllDoctors();
     }, []);
     
     return (
         <Layout>
-            <div className="page-header">
+          <div className="page-header">
             <div className="row">
               <div className="col-sm-12">
                 <ul className="breadcrumb">
@@ -39,7 +62,7 @@ const HomePage = () => {
                   <li className="breadcrumb-item">
                     <i className="feather-chevron-right"></i>
                   </li>
-                  <li className="breadcrumb-item active">Admin Dashboard</li>
+                  <li className="breadcrumb-item active">Dashboard page</li>
                 </ul>
               </div>
             </div>
@@ -49,7 +72,7 @@ const HomePage = () => {
             <div className="row">
               <div className="col-md-6">
                 <div className="morning-user">
-                  <h2>Good Morning, <span>{user?.name}</span></h2>
+                  <h2>Hello <span>{user?.name}</span></h2>
                   <p>Have a nice day at work</p>
                 </div>
               </div>
@@ -60,72 +83,75 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+
+          <div className='row'>
+
+            {/* <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6">
               <div className="dash-widget">
-                <div className="dash-boxs comman-flex-center">
-                  <img src="/img/icons/calendar.svg" alt="" />
+
+                <div className="activity-top">
+                  <div className="dash-boxs comman-flex-center me-3">
+                    <img src="/img/icons/profile-add.svg" alt="" />
+                  </div>
+                  <div className="departments-list">
+                    <h4>Dr. Tariq Mahmood</h4>
+                    <p>Tariq Hospital, Misri Shah Lahore.</p>
+                  </div>
                 </div>
-                <div className="dash-content dash-count">
-                  <h4>Appointments</h4>
-                  <h2><span className="counter-up">250</span></h2>
-                  <p>
-                    <span className="passive-view"
-                      ><i className="feather-arrow-up-right me-1"></i>40%</span>
-                    vs last month
-                  </p>
+
+                <div className="activity-top">
+                  <div className="dash-boxs comman-flex-center me-3">
+                    <img src="/img/icons/dep-icon-01.svg" alt="" />
+                  </div>
+                  <div className="departments-list">
+                    <h4>Specialization</h4>
+                    <p>General Physition</p>
+                  </div>
                 </div>
+
+                <div className="activity-top">
+                  <div className="dash-boxs comman-flex-center me-3">
+                    <img src="/img/icons/calendar.svg" alt="" />
+                  </div>
+                  <div className="departments-list">
+                    <h4>Experience</h4>
+                    <p>15 Years plus</p>
+                  </div>
+                </div>
+
+                <div className="activity-top">
+                  <div className="dash-boxs comman-flex-center me-3">
+                    <img src="/img/icons/empty-wallet.svg" alt="" />
+                  </div>
+                  <div className="departments-list">
+                    <h4>Consultation Fee</h4>
+                    <p>1500</p>
+                  </div>
+                </div>
+
+                <div className="activity-top">
+                  <div className="dash-boxs comman-flex-center me-3">
+                    <img src="/img/icons/clock2.svg" alt="" />
+                  </div>
+                  <div className="departments-list">
+                    <h4>Clinic Timing</h4>
+                    <p>08:00PM - 11:30PM</p>
+                  </div>
+                </div>
+
+                <button className="btn btn-primary">Get Appointment</button>
+                
               </div>
-            </div>
-            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-              <div className="dash-widget">
-                <div className="dash-boxs comman-flex-center">
-                  <img src="/img/icons/profile-add.svg" alt="" />
-                </div>
-                <div className="dash-content dash-count">
-                  <h4>New Patients</h4>
-                  <h2><span className="counter-up">140</span></h2>
-                  <p>
-                    <span className="passive-view"
-                      ><i className="feather-arrow-up-right me-1"></i>20%</span>
-                    vs last month
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-              <div className="dash-widget">
-                <div className="dash-boxs comman-flex-center">
-                  <img src="/img/icons/scissor.svg" alt="" />
-                </div>
-                <div className="dash-content dash-count">
-                  <h4>Operations</h4>
-                  <h2><span className="counter-up">56</span></h2>
-                  <p>
-                    <span className="negative-view"
-                      ><i className="feather-arrow-down-right me-1"></i>15%</span>
-                    vs last month
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-              <div className="dash-widget">
-                <div className="dash-boxs comman-flex-center">
-                  <img src="/img/icons/empty-wallet.svg" alt="" />
-                </div>
-                <div className="dash-content dash-count">
-                  <h4>Earnings</h4>
-                  <h2>$<span className="counter-up"> 20,250</span></h2>
-                  <p>
-                    <span className="passive-view"
-                      ><i className="feather-arrow-up-right me-1"></i>30%</span>
-                    vs last month
-                  </p>
-                </div>
-              </div>
-            </div>
+            </div> */}
+
+            {
+              doctors && doctors.map(doctor => (
+                <DoctorList key="docs9897" doctor={doctor} />
+              ))
+            }
+
           </div>
+
         </Layout>
     );
 }

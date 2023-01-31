@@ -440,7 +440,7 @@ function Layout({ children }) {
         </div>
 
         <div className="page-wrapper">
-            <div className="content">
+            <div className="content container">
                 {children}
             </div>
         </div>

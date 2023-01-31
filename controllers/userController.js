@@ -2,6 +2,8 @@ const userModel = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const doctorModel = require('../models/doctorModel');
+const appointmentModel = require('../models/appointmentModel');
+const moment = require('moment');
 
 // register callback
 const registerController = async (req, res) => {
@@ -149,7 +151,7 @@ const deleteAllNotificationController = async (req, res) => {
 };
 
 // Get ALL Doctors
-const getAllDoctorController = async (req, res) => {
+const getDoctorsController = async (req, res) => {
      try {
           const doctors = await doctorModel.find({status:'approved'});
           res.status(200).send({
@@ -167,4 +169,74 @@ const getAllDoctorController = async (req, res) => {
      }
 }
 
-module.exports = {loginController, registerController, authController, applyDoctorController, getAllNotificationsController, deleteAllNotificationController, getAllDoctorController};
+// Book Appointment Controller
+const bookAppointmentController = async (req, res) => {
+     try {
+          req.body.date = moment(req.body.date, "YYYY-MM-DD").toISOString();
+          req.body.time = moment(req.body.time, "HH:mm").add(5, 'hours').toISOString();
+          req.body.status = "pending";
+          const newAppointment = await appointmentModel(req.body);
+          await newAppointment.save();
+          const user = await userModel.findOne({_id: req.body.doctorInfo.userId});
+          user.notification.push({
+               type: 'New-Appointment-request',
+               message: `A new appointment request from ${req.body.userInfo.name}`,
+               onClickPath: '/user/appointments'
+          });
+          await user.save();
+          res.status(200).send({
+               success: true,
+               message: 'Appointment book successfully!',
+               newAppointment
+          });
+     } catch (error) {
+          console.log(error);
+          res.status(500).send({
+               success: false,
+               message: "Error while booking appointment",
+               error
+          })
+     }
+}
+
+//Booking Availability Controller
+const bookAvailabilityController = async (req, res) => {
+     console.log(req.body)
+     try {
+          const date = moment(req.body.date, "YYYY-MM-DD").toISOString();
+          const fromTime = moment(req.body.time, "HH:mm").add(4, 'hours').add(45, 'minutes').toISOString();
+          const toTime = moment(req.body.time, "HH:mm").add(5,'hours').toISOString();
+          const doctorId = req.body.doctorId;
+          console.log(date, fromTime, toTime)
+          const appointments = await appointmentModel.find({doctorId,
+               date,
+               time: {
+                    $gte:fromTime, 
+                    $lte:toTime
+               }
+          })
+          if(appointments.length > 0) {
+               return res.status(200).send({
+                    message: 'Appointment not available at this time',
+                    success: true,
+                    available: 'no'
+               });
+          } else {
+               return res.status(200).send({
+                    message: 'Appointment Available!',
+                    success: true,
+                    available: 'yes'
+               });
+          }
+          console.log(appointments)
+     } catch (error) {
+          console.log(error);
+          res.status(500).send({
+               success: false,
+               message: 'Error in Booking!',
+               error
+          });
+     }
+}
+
+module.exports = {loginController, registerController, authController, applyDoctorController, getAllNotificationsController, deleteAllNotificationController, getDoctorsController, bookAppointmentController, bookAvailabilityController};
